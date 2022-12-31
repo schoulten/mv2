@@ -28,9 +28,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-renv-
 
-      - name: Install R textshaping deps
-        run: sudo apt-get install libharfbuzz-dev libfribidi-dev
-
       - name: Restore packages
         run: |
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
@@ -46,7 +43,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Commit & Push
-      - uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
             commit_message: Teste
             commit_user_name: Fernando da Silva
