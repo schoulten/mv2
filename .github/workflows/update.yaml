@@ -38,6 +38,7 @@ jobs:
       - name: Economic activity data
         run: |
           source("R/urls.R")
+          source("R/parameters.R")
           source("R/utils.R")
           source("R/extract_data.R")
         shell: Rscript {0}

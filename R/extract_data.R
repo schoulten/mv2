@@ -31,3 +31,8 @@ raw_anfavea <- import_xls(
   skip   = 4
   )
 print_ok("Extraction completed.")
+
+# GDP growth (rate of change of the quarterly volume index from IBGE)
+print_info("Extracting GDP/SIDRA data...")
+raw_gdp <- sidrar::get_sidra(api = parameters_econ_activity$gdp)
+print_ok("Extraction completed.")
