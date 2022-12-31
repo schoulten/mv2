@@ -42,7 +42,12 @@ print_ok("Extraction completed.")
 
 # GDP growth (rate of change of the quarterly volume index from IBGE)
 print_info("Extracting GDP/SIDRA data...")
-raw_gdp <- import_sidra(api = parameters_econ_activity$gdp)
+#raw_gdp <- import_sidra(api = parameters_econ_activity$gdp)
+test1 <- httr2::request(
+  paste0("https://apisidra.ibge.gov.br/values", parameters_econ_activity$gdp)
+  )
+test2 <- httr2::req_perform(teste1)
+test3 <- httr2::resp_body_json(teste2, simplifyDataFrame = TRUE)
 print_ok("Extraction completed.")
 
 
