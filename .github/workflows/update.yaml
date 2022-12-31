@@ -40,13 +40,12 @@ jobs:
           source("R/urls.R")
           source("R/utils.R")
           source("R/extract_data.R")
-          rio::export(x = raw_icva, file = "dados.csv")
         shell: Rscript {0}
 
       - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-            commit_message: Teste
+            commit_message: Periodic data extraction
             commit_user_name: Fernando da Silva
             commit_user_email: fernando.schoulten@hotmail.com
             commit_author: Fernnado da Silva <fernando.schoulten@hotmail.com>
