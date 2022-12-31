@@ -5,7 +5,7 @@ on:
 name: Extract data
 
 jobs:
-  Extract-Data:
+  Extract-data:
     runs-on: ubuntu-latest
 
     env:
@@ -21,11 +21,15 @@ jobs:
           use-public-rspm: true
 
       - name: Cache packages
-      - uses: actions/cache@v3
+        uses: actions/cache@v3
         with:
           path: ${{ env.RENV_PATHS_ROOT }}
           key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          restore-keys: ${{ runner.os }}-renv-
+          restore-keys: |
+            ${{ runner.os }}-renv-
+
+      - name: Install R textshaping deps
+        run: sudo apt-get install libharfbuzz-dev libfribidi-dev
 
       - name: Restore packages
         run: |
