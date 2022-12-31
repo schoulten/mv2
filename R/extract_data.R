@@ -11,6 +11,7 @@ import_xls <- retry(fun = rio::import)
 # Economic activity -------------------------------------------------------
 
 # ICVA (Cielo)
+print_info("Extracting ICVA data...")
 raw_icva <- import_xls(
   file   = urls_econ_activity$icva,
   format = "xlsx",
@@ -19,3 +20,14 @@ raw_icva <- import_xls(
   n_max  = 4,
   na     = "-"
   )
+print_ok("Extraction completed.")
+
+
+# Vehicle Production (ANFAVEA)
+print_info("Extracting ANFAVEA data...")
+raw_anfavea <- import_xls(
+  file   = urls_econ_activity$anfavea,
+  format = "xlsx",
+  skip   = 4
+  )
+print_ok("Extraction completed.")
