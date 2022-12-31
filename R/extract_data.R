@@ -45,7 +45,7 @@ print_info("Extracting GDP/SIDRA data...")
 #raw_gdp <- import_sidra(api = parameters_econ_activity$gdp)
 test1 <- httr2::request(
   paste0("https://apisidra.ibge.gov.br/values", parameters_econ_activity$gdp)
-  )
+  ) |> httr2::req_options(ssl_verifypeer = 0)
 test2 <- httr2::req_perform(test1)
 test3 <- httr2::resp_body_json(test2, simplifyDataFrame = TRUE)
 print_ok("Extraction completed.")
