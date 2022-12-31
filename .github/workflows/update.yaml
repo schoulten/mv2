@@ -32,6 +32,27 @@ jobs:
       - name: Install curl
         run: sudo apt -y install libcurl4-openssl-dev
 
+      - name: Configure SSL
+        run: |
+          sudo cp /etc/ssl/openssl.cnf /etc/wpa_supplicant/
+          motify /etc/wpa_supplicant/openssl.cnf
+          [openssl_init]
+          providers = provider_sect
+          ssl_conf = ssl_sect
+          [ssl_sect]
+          system_default = system_default_sect
+          [system_default_sect]
+          Options = UnsafeLegacyRenegotiation
+          modify /usr/lib/systemd/system/wpa_supplicant.service
+          [Service]
+          Type=dbus
+          BusName=fi.w1.wpa_supplicant1
+          Environment="OPENSSL_CONF=/etc/wpa_supplicant/openssl.cnf"
+          ExecStart=/sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+          ExecReload=/bin/kill -HUP $MAINPID
+          sudo systemctl daemon-reload
+          sudo systemctl restart wpa_supplicant.service
+
       - name: Restore packages
         run: |
           if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
