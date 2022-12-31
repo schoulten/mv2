@@ -12,7 +12,7 @@ import_xls <- retry(fun = rio::import)
 
 # ICVA (Cielo)
 raw_icva <- import_xls(
-  file  = urls_econ_activity$icva,
+  file   = urls_econ_activity$icva,
   format = "xlsx",
   sheet  = "Índice Mensal",
   skip   = 6,
