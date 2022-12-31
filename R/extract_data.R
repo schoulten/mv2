@@ -7,6 +7,14 @@
 # Funcion to import Excel files
 import_xls <- retry(fun = rio::import)
 
+# Function to import SIDRA tables
+import_sidra <- function(api) {
+  paste0("https://apisidra.ibge.gov.br/values", api) |>
+    httr2::request() |>
+    httr2::req_perform() |>
+    httr2::resp_body_json(simplifyDataFrame = TRUE)
+}
+
 
 # Economic activity -------------------------------------------------------
 
@@ -34,5 +42,7 @@ print_ok("Extraction completed.")
 
 # GDP growth (rate of change of the quarterly volume index from IBGE)
 print_info("Extracting GDP/SIDRA data...")
-raw_gdp <- sidrar::get_sidra(api = parameters_econ_activity$gdp)
+raw_gdp <- import_sidra(api = parameters_econ_activity$gdp)
 print_ok("Extraction completed.")
+
+
