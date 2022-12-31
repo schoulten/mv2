@@ -2,6 +2,12 @@
 # Code to extract data from several online sources
 
 
+# Packages ----------------------------------------------------------------
+
+# Explicity load packages
+library(jsonlite)
+
+
 # Get functions -----------------------------------------------------------
 
 # Funcion to import Excel files
