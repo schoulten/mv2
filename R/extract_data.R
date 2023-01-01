@@ -8,6 +8,7 @@
 library(jsonlite)
 
 
+
 # Get functions -----------------------------------------------------------
 
 # Funcion to import Excel files
@@ -64,11 +65,12 @@ import_sidra <- function(api, source = NULL) {
 }
 
 
+
 # Economic activity -------------------------------------------------------
 
 # ICVA (Cielo)
 raw_icva <- import_xls(
-  url    = urls_econ_activity$icva,
+  url    = parameters$icva,
   sheet  = "Índice Mensal",
   skip   = 6,
   n_max  = 4,
@@ -79,46 +81,34 @@ raw_icva <- import_xls(
 
 # Vehicle Production (ANFAVEA)
 raw_anfavea <- import_xls(
-  url    = urls_econ_activity$anfavea,
+  url    = parameters$anfavea,
   skip   = 4,
   source = "ANFAVEA"
   )
 
 
 # GDP growth (rate of change of the quarterly volume index from IBGE)
-raw_gdp_pct <- import_sidra(
-  api    = parameters_econ_activity$gdp_pct,
-  source = "GDP (%)/SIDRA"
-  )
+raw_gdp_pct <- import_sidra(api = parameters$gdp_pct, source = "GDP (%)/SIDRA")
 
 
 # GDP (values at current prices from IBGE)
-raw_gdp_brl <- import_sidra(
-  api = parameters_econ_activity$gdp_brl,
-  source = "GDP (R$)/SIDRA"
-  )
+raw_gdp_brl <- import_sidra(api = parameters$gdp_brl, source = "GDP (R$)/SIDRA")
 
 
 # PMC (retail trade from IBGE)
-raw_pmc <- import_sidra(
-  api = parameters_econ_activity$pmc,
-  source = "PMC/SIDRA"
-  )
+raw_pmc <- import_sidra(api = parameters$pmc, source = "PMC/SIDRA")
 
 
 # PMC (expanded retail trade from IBGE)
 raw_pmc_expanded <- import_sidra(
-  api = parameters_econ_activity$pmc_expanded,
+  api    = parameters$pmc_expanded,
   source = "PMC expanded/SIDRA"
   )
 
 
 # PMS (Monthly Service Survey from IBGE)
-raw_pms <- import_sidra(
-  api = parameters_econ_activity$pms,
-  source = "PMS/SIDRA"
-  )
+raw_pms <- import_sidra(api = parameters$pms, source = "PMS/SIDRA")
 
 
 # PIM (Monthly Industrial Survey from IBGE - YoY rate of change)
-raw_pim <- import_sidra(api = parameters_econ_activity$pim)
+raw_pim <- import_sidra(api = parameters$pim)
