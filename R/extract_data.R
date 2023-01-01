@@ -112,7 +112,7 @@ import_sgs <- function(code, start = NULL, end = NULL) {
     paste(
       c(
         "Extracting",
-        dplyr::if_else(
+        ifelse(
           null_names,
           paste0("SGS (code = ", code, ")"),
           paste0("SGS (", code_names, " = ", code, ")")
@@ -195,7 +195,7 @@ raw_pms <- import_sidra(api = parameters$pms, source = "PMS/SIDRA")
 
 
 # PIM (Monthly Industrial Survey, YoY rate of change, IBGE)
-raw_pim <- import_sidra(api = parameters$pim)
+raw_pim <- import_sidra(api = parameters$pim, source = "PIM/SIDRA")
 
 
 # Installed Capacity Utilization Level (NUCI/FGV)
