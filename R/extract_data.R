@@ -86,7 +86,39 @@ raw_anfavea <- import_xls(
 
 
 # GDP growth (rate of change of the quarterly volume index from IBGE)
-raw_gdp <- import_sidra(
-  api    = parameters_econ_activity$gdp,
-  source = "GDP/SIDRA"
+raw_gdp_pct <- import_sidra(
+  api    = parameters_econ_activity$gdp_pct,
+  source = "GDP (%)/SIDRA"
   )
+
+
+# GDP (values at current prices from IBGE)
+raw_gdp_brl <- import_sidra(
+  api = parameters_econ_activity$gdp_brl,
+  source = "GDP (R$)/SIDRA"
+  )
+
+
+# PMC (retail trade from IBGE)
+raw_pmc <- import_sidra(
+  api = parameters_econ_activity$pmc,
+  source = "PMC/SIDRA"
+  )
+
+
+# PMC (expanded retail trade from IBGE)
+raw_pmc_expanded <- import_sidra(
+  api = parameters_econ_activity$pmc_expanded,
+  source = "PMC expanded/SIDRA"
+  )
+
+
+# PMS (Monthly Service Survey from IBGE)
+raw_pms <- import_sidra(
+  api = parameters_econ_activity$pms,
+  source = "PMS/SIDRA"
+  )
+
+
+# PIM (Monthly Industrial Survey from IBGE - YoY rate of change)
+raw_pim <- import_sidra(api = sidra$pim)

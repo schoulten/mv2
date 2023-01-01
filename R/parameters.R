@@ -8,7 +8,7 @@
 parameters_econ_activity <- list(
 
   # GDP (percent changes)
-  gdp = paste0(
+  gdp_pct = paste0(
     "/t/5932/n1/all/v/all/p/all/c11255/90687,90691,90696,90707,93404,93405,",
     "93406,93407,93408/d/v6561%201,v6562%201,v6563%201,v6564%201"
     ),
