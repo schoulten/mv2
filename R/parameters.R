@@ -44,6 +44,21 @@ parameters_econ_activity <- list(
   # PIM (Monthly Industrial Survey, YoY rate of change, IBGE)
   pim = paste0(
     "/t/3653/n1/all/v/3139/p/all/c544/129314,129315,129316,129338/d/v3139%201"
+    ),
+
+  # Installed Capacity Utilization Level (NUCI/FGV)
+  nuci = c(
+    "Installed Capacity Utilization Level" = 28561
+    ),
+
+  # IBC-Br (economic activity index, BCB)
+  ibc = c(
+    "Brasil"       = 24364,
+    "Norte"        = 25407,
+    "Nordeste"     = 25389,
+    "Centro-Oeste" = 25382,
+    "Sudeste"      = 25395,
+    "Sul"          = 25403
     )
 
   )
