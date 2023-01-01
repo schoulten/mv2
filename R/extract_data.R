@@ -11,7 +11,9 @@ library(jsonlite)
 # Get functions -----------------------------------------------------------
 
 # Funcion to import Excel files
-import_xls <- function(url, ...) {
+import_xls <- function(url, source = NULL, ...) {
+
+  print_info(paste(c("Extracting", source, "data..."), collapse = " "))
 
   req <- url |>
     httr2::request() |>
@@ -28,6 +30,7 @@ import_xls <- function(url, ...) {
       )
   } else {
     data <- readxl::read_xlsx(path = resp$body, ...)
+    print_ok("Extraction completed.")
     return(data)
   }
 
@@ -35,7 +38,9 @@ import_xls <- function(url, ...) {
 
 
 # Function to import SIDRA tables
-import_sidra <- function(api) {
+import_sidra <- function(api, source = NULL) {
+
+  print_info(paste(c("Extracting", source, "data..."), collapse = " "))
 
   req <- paste0("https://apisidra.ibge.gov.br/values", api) |>
     httr2::request() |>
@@ -52,6 +57,7 @@ import_sidra <- function(api) {
       )
   } else {
     data <- httr2::resp_body_json(resp = resp, simplifyDataFrame = TRUE)
+    print_ok("Extraction completed.")
     return(data)
   }
 
@@ -61,25 +67,26 @@ import_sidra <- function(api) {
 # Economic activity -------------------------------------------------------
 
 # ICVA (Cielo)
-print_info("Extracting ICVA data...")
 raw_icva <- import_xls(
-  url   = urls_econ_activity$icva,
-  sheet = "Índice Mensal",
-  skip  = 6,
-  n_max = 4,
-  na    = "-"
+  url    = urls_econ_activity$icva,
+  sheet  = "Índice Mensal",
+  skip   = 6,
+  n_max  = 4,
+  na     = "-",
+  source = "ICVA"
   )
-print_ok("Extraction completed.")
 
 
 # Vehicle Production (ANFAVEA)
-print_info("Extracting ANFAVEA data...")
-raw_anfavea <- import_xls(url = urls_econ_activity$anfavea, skip = 4)
-print_ok("Extraction completed.")
+raw_anfavea <- import_xls(
+  url    = urls_econ_activity$anfavea,
+  skip   = 4,
+  source = "ANFAVEA"
+  )
+
 
 # GDP growth (rate of change of the quarterly volume index from IBGE)
-print_info("Extracting GDP/SIDRA data...")
-raw_gdp <- import_sidra(api = parameters_econ_activity$gdp)
-print_ok("Extraction completed.")
-
-
+raw_gdp <- import_sidra(
+  api    = parameters_econ_activity$gdp,
+  source = "GDP/SIDRA"
+  )
