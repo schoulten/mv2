@@ -121,4 +121,4 @@ raw_pms <- import_sidra(
 
 
 # PIM (Monthly Industrial Survey from IBGE - YoY rate of change)
-raw_pim <- import_sidra(api = sidra$pim)
+raw_pim <- import_sidra(api = parameters_econ_activity$pim)
