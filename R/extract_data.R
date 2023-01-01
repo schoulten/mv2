@@ -11,7 +11,28 @@ library(jsonlite)
 # Get functions -----------------------------------------------------------
 
 # Funcion to import Excel files
-import_xls <- retry(fun = rio::import)
+import_xls <- function(url, ...) {
+
+  req <- url |>
+    httr2::request() |>
+    httr2::req_retry(max_tries = 3, max_seconds = 10)
+
+  resp <- httr2::req_perform(req = req, path = tempfile(fileext = ".xlsx"))
+
+  if (httr2::resp_is_error(resp = resp)) {
+    print_error(
+      paste0(
+        "Excel file request failed with status: ",
+        httr2::resp_status(resp = resp)
+        )
+      )
+  } else {
+    data <- readxl::read_xlsx(path = resp$body, ...)
+    return(data)
+  }
+
+}
+
 
 # Function to import SIDRA tables
 import_sidra <- function(api) {
@@ -42,23 +63,18 @@ import_sidra <- function(api) {
 # ICVA (Cielo)
 print_info("Extracting ICVA data...")
 raw_icva <- import_xls(
-  file   = urls_econ_activity$icva,
-  format = "xlsx",
-  sheet  = "Índice Mensal",
-  skip   = 6,
-  n_max  = 4,
-  na     = "-"
+  url   = urls_econ_activity$icva,
+  sheet = "Índice Mensal",
+  skip  = 6,
+  n_max = 4,
+  na    = "-"
   )
 print_ok("Extraction completed.")
 
 
 # Vehicle Production (ANFAVEA)
 print_info("Extracting ANFAVEA data...")
-raw_anfavea <- import_xls(
-  file   = urls_econ_activity$anfavea,
-  format = "xlsx",
-  skip   = 4
-  )
+raw_anfavea <- import_xls(url = urls_econ_activity$anfavea, skip = 4)
 print_ok("Extraction completed.")
 
 # GDP growth (rate of change of the quarterly volume index from IBGE)
