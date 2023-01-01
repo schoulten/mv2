@@ -15,10 +15,25 @@ import_xls <- retry(fun = rio::import)
 
 # Function to import SIDRA tables
 import_sidra <- function(api) {
-  paste0("https://apisidra.ibge.gov.br/values", api) |>
+
+  req <- paste0("https://apisidra.ibge.gov.br/values", api) |>
     httr2::request() |>
-    httr2::req_perform() |>
-    httr2::resp_body_json(simplifyDataFrame = TRUE)
+    httr2::req_retry(max_tries = 3, max_seconds = 10)
+
+  resp <- httr2::req_perform(req = req)
+
+  if (httr2::resp_is_error(resp = resp)) {
+    print_error(
+      paste0(
+        "SIDRA API request failed with status: ",
+        httr2::resp_status(resp = resp)
+        )
+      )
+  } else {
+    data <- httr2::resp_body_json(resp = resp, simplifyDataFrame = TRUE)
+    return(data)
+  }
+
 }
 
 
@@ -48,12 +63,7 @@ print_ok("Extraction completed.")
 
 # GDP growth (rate of change of the quarterly volume index from IBGE)
 print_info("Extracting GDP/SIDRA data...")
-#raw_gdp <- import_sidra(api = parameters_econ_activity$gdp)
-test1 <- httr2::request(
-  paste0("https://apisidra.ibge.gov.br/values", parameters_econ_activity$gdp)
-  ) |> httr2::req_options(ssl_verifypeer = 0)
-test2 <- httr2::req_perform(test1)
-test3 <- httr2::resp_body_json(test2, simplifyDataFrame = TRUE)
+raw_gdp <- import_sidra(api = parameters_econ_activity$gdp)
 print_ok("Extraction completed.")
 
 

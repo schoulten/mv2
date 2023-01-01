@@ -30,3 +30,4 @@ retry <- function(
 # Pretty print messages
 print_info <- function(text) {cli::cli_alert_info(text = text)}
 print_ok <- function(text) {cli::cli_alert_success(text = text)}
+print_error <- function(text) {cli::cli_alert_danger(text = text)}
