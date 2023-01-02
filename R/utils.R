@@ -53,34 +53,3 @@ is_installed <- function(pkg) {
       )
   }
 }
-
-
-# HTTP request
-http_req <- function(url) {
-  url |>
-    httr2::request() |>
-    httr2::req_retry(max_tries = 3, max_seconds = 10)
-}
-
-
-# HTTP response
-http_resp <- function(req, ...) {
-  req |>
-    httr2::req_error(is_error = function(resp) FALSE) |>
-    httr2::req_perform(...)
-}
-
-
-# HTTP response error message
-http_error_message <- function(response, source) {
-
-  req_url <- response$url
-  req_status <- httr2::resp_status(resp = response)
-
-  print_error(
-    c(
-      "x" = paste0(source, " request failed with status: {", req_status, "}"),
-      "!" = paste0("URL: {.url ", req_url, "}")
-      )
-    )
-}
