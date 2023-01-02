@@ -43,6 +43,7 @@ jobs:
         run: |
           source("R/parameters.R")
           source("R/utils.R")
+          source("R/import.R")
           source("R/extract_data.R")
         shell: Rscript {0}
 
