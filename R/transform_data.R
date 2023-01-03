@@ -5,8 +5,8 @@
 # Economic activity -------------------------------------------------------
 
 # Console messages
-cli::cli_h1("Economic activity")
-print_info("Starting data wrangling...")
+cli::cli_h1("Starting data wrangling")
+cli::cli_h2("Economic activity")
 
 
 # |-- ICVA (Cielo) ----
