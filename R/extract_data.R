@@ -4,6 +4,11 @@
 
 # Economic activity -------------------------------------------------------
 
+# Console messages
+cli::cli_h1("Economic activity")
+print_info("Starting data extraction...")
+
+
 # ICVA (Cielo)
 raw_icva <- import_xls(
   url    = parameters$icva,

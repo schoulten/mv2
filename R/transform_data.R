@@ -4,8 +4,10 @@
 
 # Economic activity -------------------------------------------------------
 
+# Console messages
 cli::cli_h1("Economic activity")
 print_info("Starting data wrangling...")
+
 
 # |-- ICVA (Cielo) ----
 tbl_icva <- raw_icva |>
