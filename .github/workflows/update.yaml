@@ -2,10 +2,10 @@ on:
   push:
     branches: [main, master]
 
-name: Extract data
+name: Data ETL
 
 jobs:
-  Extract-data:
+  ETL:
     runs-on: ubuntu-22.04
 
     env:
@@ -23,12 +23,14 @@ jobs:
       - name: Install R packages
         uses: r-lib/actions/setup-renv@v2
 
-      - name: Economic activity data
+      - name: ETL code
         run: |
           source("R/parameters.R")
           source("R/utils.R")
           source("R/import.R")
           source("R/extract_data.R")
+          source("R/wrangling.R")
+          source("R/transform_data.R")
         shell: Rscript {0}
 
       - name: Commit & Push
