@@ -31,3 +31,17 @@ check_dimensions(df = tbl_icva, source = "ICVA")
 
 
 # |-- Vehicle Production (ANFAVEA) ----
+anfavea <- raw_anfavea
+
+anfavea |>
+  dplyr::select(
+    "date" = where(is_date),
+    "value" = dplyr::all_of("Produção...5")
+    )
+  dplyr::na_if(0) %>%
+  tidyr::drop_na() %>%
+  mutate(
+    date = lubridate::as_date(date),
+    value = round(value / 1e3, 1) %>% paste0("k")
+  ) %>%
+  filter(date == last(date))

@@ -36,7 +36,15 @@ print_error <- function(text) {
 
 
 # Check class
-is_date <- function(obj) {inherits(x = obj, what = "Date")}
+is_date <- function(obj) {
+  any(
+    c(
+      inherits(x = obj, what = "Date"),
+      inherits(x = obj, what = "POSIXt"),
+      inherits(x = obj, what = "POSIXct")
+      )
+    )
+}
 
 
 # Format characters
